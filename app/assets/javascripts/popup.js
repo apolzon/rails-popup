@@ -2,11 +2,13 @@ function Popup(html, options) {
   return new PopupClass(html, options)
 }
 
+Popup.defaultConfig = {width: 300}
+
 function PopupClass(html, options) {
   contents = $(html)
   this.popupWindow = $('<div class="popup"></div>')
 
-  options = $.extend({}, {width: 300}, options || {})
+  options = $.extend({}, Popup.defaultConfig, options || {})
   if ((typeof options.width) === "number") {
     widthString = options.width.toString() + 'px'
   } else {
