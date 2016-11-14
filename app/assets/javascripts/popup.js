@@ -7,8 +7,13 @@ function PopupClass(html, options) {
   this.popupWindow = $('<div class="popup"></div>')
 
   options = $.extend({}, {width: 300}, options || {})
+  if ((typeof options.width) === "number") {
+    widthString = options.width.toString() + 'px'
+  } else {
+    widthString = options.width
+  }
   this.popupWindow.css({
-    'width': options.width.toString() + 'px', 
+    'width': widthString,
     'margin-left': (options.width/2 * -1).toString() + 'px'
   })
   this.popupWindow.append(contents)
@@ -24,6 +29,9 @@ PopupClass.prototype.move = function (from, to, callback) {
 
 PopupClass.prototype.show = function (direction, callback) {
   $('body').append(this.popupWindow)
+  this.popupWindow.css({
+    'margin-left': (this.popupWindow.width() / 2 * -1).toString() + 'px'
+  })
   startFrom = (direction == 'up') ? '180%' : '-80%'
   this.move(startFrom, this.distanceFromTop(), callback)
   return this;
